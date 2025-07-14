@@ -49,6 +49,30 @@ public class ShoppingCartManualTest {
             failedCount++;
         }
 
+        // Test 4: คำนวณส่วนลด BOGO 4 ชิ้น (จ่าย 2)
+        ArrayList<CartItem> bogoCart = new ArrayList<>();
+        bogoCart.add(new CartItem("BOGO", "Shampoo", 100.0, 4)); // 200
+        double total4 = ShoppingCartCalculator.calculateTotalPrice(bogoCart);
+        if (total4 == 200.0) {
+            System.out.println("PASSED: BOGO cart total is correct (200.0)");
+            passedCount++;
+        } else {
+            System.out.println("FAILED: BOGO cart total expected 200.0 but got " + total4);
+            failedCount++;
+        }
+
+        // Test 5: คำนวณส่วนลด BULK 8 ชิ้น (ลด 10%)
+        ArrayList<CartItem> bulkCart = new ArrayList<>();
+        bulkCart.add(new CartItem("BULK", "Tissue", 20.0, 8)); // 160 → 144
+        double total5 = ShoppingCartCalculator.calculateTotalPrice(bulkCart);
+        if (total5 == 144.0) {
+            System.out.println("PASSED: BULK cart total is correct (144.0)");
+            passedCount++;
+        } else {
+            System.out.println("FAILED: BULK cart total expected 144.0 but got " + total5);
+            failedCount++;
+        }
+
         // --- Test Summary ---
         System.out.println("\n--------------------");
         System.out.println("--- Test Summary ---");

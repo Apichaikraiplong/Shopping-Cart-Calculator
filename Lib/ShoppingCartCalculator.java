@@ -12,9 +12,50 @@ public class ShoppingCartCalculator {
      * @param totalprice คือ ราคาที่ต้องการตรวจสอบ
      * @return ส่วนลดทีประกอบด้วย {์NORMAL , BOGO , BULK}
      */
-    public static double calculateTotalPrice(ArrayList<CartItem> items) {
-        // TODO: เขียนโค้ด Implementation ที่นี่
+    public static double calculateTotalPrice(ArrayList<CartItem> items)  {
         
-        return 0.0;
+        if(items == null || items.isEmpty())
+            return 0.0;
+
+        double total = 0.0;
+
+        for (CartItem Item : items) {
+            if(Item == null || Item.price() < 0 || Item.quantity() < 0){
+                throw new IllegalArgumentException("ERROR");
+            }
+            
+            double itemTotal = 0.0;
+            String sku = Item.sku();
+            double price = Item.price();
+            int quantity = Item.quantity();
+
+            switch (sku.toUpperCase()) {
+                case "BOGO":
+                    int pay = (quantity/2) + (quantity%2);
+                        itemTotal = price * pay;
+                    break;
+
+                case "BULK":
+                    if (quantity >= 6) {
+                        itemTotal = price * quantity * 0.9 ;
+                    } 
+                    else{
+                        itemTotal = price * quantity ;
+                    }
+                    break;
+
+                case "NORMAL":
+                        itemTotal = price * quantity ;
+                    break;
+                default:
+                        itemTotal = price * quantity ;
+            }
+
+            total += itemTotal;
+
+        }
+        return total;
+
+        
     }
 }
