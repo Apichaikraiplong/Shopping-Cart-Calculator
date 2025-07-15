@@ -29,27 +29,20 @@ public class ShoppingCartCalculator {
             double price = Item.price();
             int quantity = Item.quantity();
 
-            switch (sku.toUpperCase()) {
-                case "BOGO":
-                    int pay = (quantity/2) + (quantity%2);
-                        itemTotal = price * pay;
-                    break;
-
-                case "BULK":
-                    if (quantity >= 6) {
-                        itemTotal = price * quantity * 0.9 ;
-                    } 
-                    else{
-                        itemTotal = price * quantity ;
-                    }
-                    break;
-
-                case "NORMAL":
-                        itemTotal = price * quantity ;
-                    break;
-                default:
-                        itemTotal = price * quantity ;
-            }
+            if (sku.equals("BOGO")) {
+                int pay = (quantity / 2) + (quantity % 2);
+                itemTotal = price * pay;
+            } else if (sku.equals("BULK")) {
+                if (quantity >= 6) {
+                    itemTotal = price * quantity * 0.9;
+                } else {
+                    itemTotal = price * quantity;
+                }           
+            }  else if (sku.equals("NORMAL")) {
+                     itemTotal = price * quantity;
+                } else {
+                    itemTotal = price * quantity;
+                }
 
             total += itemTotal;
 
